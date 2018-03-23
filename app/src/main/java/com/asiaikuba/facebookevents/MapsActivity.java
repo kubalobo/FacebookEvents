@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -23,13 +26,17 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements
+        OnMapReadyCallback,
+        GoogleMap.OnMarkerClickListener,
+        GoogleMap.OnInfoWindowClickListener{
 
     private GoogleMap mMap;
     private CallbackManager callbackManager;
@@ -115,11 +122,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        Marker mPerth = mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(10, 10)));
+        mPerth.setTag(0);
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        Marker warszawa = mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(52.23, 20.92)));
+        warszawa.setTag(0);
+//
+        InfoWindowData infoWindowAdapter = new InfoWindowData(this);
+
+
+
+//        mPerth.showInfoWindow();
+
+//        LatLng snowqualmie = new LatLng(52.23, 20.92);
+//        MarkerOptions markerOptions = new MarkerOptions();
+//        markerOptions.position(snowqualmie)
+//                .title("aaa")
+//                .snippet("bbb");
+
+//        InfoWindowData info = new InfoWindowData();
+//        info.setImage("snowqualmie");
+//        info.setHotel("Hotel : excellent hotels available");
+//        info.setFood("Food : all types of restaurants available");
+//        info.setTransport("Reach the site by bus, car and train.");
+
+//        CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
+//        mMap.setInfoWindowAdapter(customInfoWindow);
+
+        mMap.setInfoWindowAdapter(infoWindowAdapter);
+        mMap.setOnMarkerClickListener(this);
+        mMap.setOnInfoWindowClickListener(this);
+
+//        Marker m = mMap.addMarker(markerOptions);
+//        m.setTag(0);
+//        m.showInfoWindow();
+
     }
 
 
@@ -143,4 +182,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+        marker.showInfoWindow();
+        return false;
+    }
+
+    @Override
+    public void onInfoWindowClick(Marker marker) {
+        Toast.makeText(this, "Info window clicked",
+                Toast.LENGTH_SHORT).show();
+
+    }
+
+
+
 }
