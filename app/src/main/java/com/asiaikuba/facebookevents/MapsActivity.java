@@ -79,29 +79,7 @@ public class MapsActivity extends FragmentActivity implements
                 Toast.makeText(getApplicationContext(), "PORAŻKA!", Toast.LENGTH_SHORT).show();
             }
         });
-
-        searchFacebookPlaces();
     }
-
-    private void searchFacebookPlaces() {
-        PlaceSearchRequestParams.Builder builder =
-                new PlaceSearchRequestParams.Builder();
-
-        builder.setSearchText("Cafe");
-        builder.setDistance(1000); // 1,000 m. max distance.
-        builder.setLimit(10);
-        builder.addField(PlaceFields.NAME);
-        builder.addField(PlaceFields.LOCATION);
-        builder.addField(PlaceFields.PHONE);
-
-        PlaceSearchRequestCallback callback = new PlaceSearchRequestCallback();
-
-// The SDK will automatically retrieve the device location and invoke
-// the OnRequestReadyCallback when the request is ready to be executed.
-        PlaceManager.newPlaceSearchRequest(builder.build(), callback);
-
-    }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -110,15 +88,6 @@ public class MapsActivity extends FragmentActivity implements
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -158,12 +127,10 @@ public class MapsActivity extends FragmentActivity implements
 //        Marker m = mMap.addMarker(markerOptions);
 //        m.setTag(0);
 //        m.showInfoWindow();
-
     }
 
-
-
-
+    /**
+     * Old probably not important method */
     private void printKeyHash() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
