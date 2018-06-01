@@ -28,10 +28,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-public class MapsActivity extends FragmentActivity implements
-        OnMapReadyCallback,
-        GoogleMap.OnMarkerClickListener,
-        GoogleMap.OnInfoWindowClickListener{
+public class MapsActivity extends FragmentActivity{
 
     private GoogleMap mMap;
     private CallbackManager callbackManager;
@@ -44,11 +41,7 @@ public class MapsActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
 
-        printKeyHash();
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -97,80 +90,6 @@ public class MapsActivity extends FragmentActivity implements
     }
 
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        Marker mPerth = mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(10, 10)));
-        mPerth.setTag(0);
-
-        Marker warszawa = mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.23, 20.92)));
-        warszawa.setTag(0);
-//
-        InfoWindowData infoWindowAdapter = new InfoWindowData(this);
-
-
-
-//        mPerth.showInfoWindow();
-
-//        LatLng snowqualmie = new LatLng(52.23, 20.92);
-//        MarkerOptions markerOptions = new MarkerOptions();
-//        markerOptions.position(snowqualmie)
-//                .title("aaa")
-//                .snippet("bbb");
-
-//        InfoWindowData info = new InfoWindowData();
-//        info.setImage("snowqualmie");
-//        info.setHotel("Hotel : excellent hotels available");
-//        info.setFood("Food : all types of restaurants available");
-//        info.setTransport("Reach the site by bus, car and train.");
-
-//        CustomInfoWindowGoogleMap customInfoWindow = new CustomInfoWindowGoogleMap(this);
-//        mMap.setInfoWindowAdapter(customInfoWindow);
-
-        mMap.setInfoWindowAdapter(infoWindowAdapter);
-        mMap.setOnMarkerClickListener(this);
-        mMap.setOnInfoWindowClickListener(this);
-
-//        Marker m = mMap.addMarker(markerOptions);
-//        m.setTag(0);
-//        m.showInfoWindow();
-    }
-
-    /**
-     * Old probably not important method */
-    private void printKeyHash() {
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.asiaikuba.facebookevents",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.wtf("Problem", "NameNotFoundException");
-
-        } catch (NoSuchAlgorithmException e) {
-            Log.wtf("Problem", "NoSuchAlgorithmException");
-
-        }
-    }
-
-    @Override
-    public boolean onMarkerClick(final Marker marker) {
-        marker.showInfoWindow();
-        return false;
-    }
-
-    @Override
-    public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(this, "Info window clicked",
-                Toast.LENGTH_SHORT).show();
-
-    }
 
 
 

@@ -11,6 +11,9 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.Profile;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class FacebookEventsGetter {
@@ -31,6 +34,14 @@ public class FacebookEventsGetter {
                     public void onCompleted(GraphResponse response) {
                         Toast.makeText(getApplicationContext(), "Cosik pobrano!", Toast.LENGTH_SHORT).show();
                         Log.wtf("FB_Response", response.toString());
+
+                        JSONObject object = response.getJSONObject();
+                        try {
+                            String data = object.getString("data");
+                            JsonParser.parse(data);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
         ).executeAsync();
