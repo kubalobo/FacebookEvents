@@ -1,5 +1,7 @@
 package com.asiaikuba.facebookevents;
 
+import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -7,20 +9,30 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.Profile;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class FacebookEventsGetter {
     /* make the API call */
-    GraphRequestAsyncTask request = new GraphRequest(
-            AccessToken.getCurrentAccessToken(),
-            "/{user-id}/events",
-            null,
-            HttpMethod.GET,
-            new GraphRequest.Callback() {
-                public void onCompleted(GraphResponse response) {
-                    Toast.makeText(getApplicationContext(), "Cosik pobrano!", Toast.LENGTH_SHORT).show();
+    public void getEvents() {
+        String userId = Profile.getCurrentProfile().getId();
+        Log.wtf("FB_Response", userId);
+
+        Bundle params = new Bundle();
+        params.putString("include_canceled", "true");
+
+        GraphRequestAsyncTask request = new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/"+ userId +"/events",
+                params,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        Toast.makeText(getApplicationContext(), "Cosik pobrano!", Toast.LENGTH_SHORT).show();
+                        Log.wtf("FB_Response", response.toString());
+                    }
                 }
-            }
-    ).executeAsync();
+        ).executeAsync();
+    }
 }

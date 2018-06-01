@@ -8,20 +8,15 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.facebook.places.PlaceManager;
-import com.facebook.places.model.PlaceFields;
-import com.facebook.places.model.PlaceSearchRequestParams;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -59,24 +54,38 @@ public class MapsActivity extends FragmentActivity implements
 
 
         LoginButton loginButton = findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList(EMAIL));
+        loginButton.setReadPermissions(Arrays.asList(EMAIL, "user_events"));
         // If you are using in a fragment, call loginButton.setFragment(this);
 
         // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(getApplicationContext(), "SUKCES!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "ZALOGOWANO!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onCancel() {
-                Toast.makeText(getApplicationContext(), "REZYGNACJA!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "LOGOWANIE PRZERWANE!", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException exception) {
-                Toast.makeText(getApplicationContext(), "PORAŻKA!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "BŁĄD LOGOWANIA!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        getEventsButtonClick();
+    }
+
+    public void getEventsButtonClick() {
+        final FacebookEventsGetter fbGetter = new FacebookEventsGetter();
+
+
+        Button but = findViewById(R.id.getEventsButton);
+        but.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fbGetter.getEvents();
             }
         });
     }

@@ -35,6 +35,12 @@
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp" />
 
+        <Button
+            android:id="@+id/getEventsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get events" />
+
     </FrameLayout>
 
 
