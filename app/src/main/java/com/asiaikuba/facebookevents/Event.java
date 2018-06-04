@@ -1,5 +1,12 @@
 package com.asiaikuba.facebookevents;
 
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
+
+import com.mikepenz.fastadapter.items.AbstractItem;
+
 public class Event {
     public final String description;
     public final String start_time;
@@ -16,6 +23,6 @@ public class Event {
         this.name = name;
         this.rsvp_status = rsvp_status;
     }
-//    public final ??? place;
+
 
 }

@@ -10,18 +10,21 @@ import java.util.List;
 
 public class JsonParser {
 
-    static void parse(String json) {
-        Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<Event> jsonAdapter = moshi.adapter(Event.class);
+    static List<EventsAdapter> parse(String json) {
+        Moshi moshi = new Moshi.Builder()
+                .add(new JsonEventAdapter())
+                .build();
 
-        Type type = Types.newParameterizedType(List.class, Event.class);
-        JsonAdapter<List<Event>> adapter = moshi.adapter(type);
+        Type type = Types.newParameterizedType(List.class, EventsAdapter.class);
+        JsonAdapter<List<EventsAdapter>> adapter = moshi.adapter(type);
 
         try {
-            List<Event> events = adapter.fromJson(json);
+            List<EventsAdapter> events = adapter.fromJson(json);
             System.out.println(events.get(0).name);
+            return events;
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
     }
 }

@@ -18,7 +18,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class FacebookEventsGetter {
     /* make the API call */
-    public void getEvents() {
+    public void getEvents(final MainActivity activity) {
         String userId = Profile.getCurrentProfile().getId();
         Log.wtf("FB_Response", userId);
 
@@ -38,7 +38,7 @@ public class FacebookEventsGetter {
                         JSONObject object = response.getJSONObject();
                         try {
                             String data = object.getString("data");
-                            JsonParser.parse(data);
+                            activity.events = JsonParser.parse(data);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
