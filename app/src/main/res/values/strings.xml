@@ -3,4 +3,11 @@
     <string name="title_activity_maps">Map</string>
     <string name="facebook_app_id">232323563980343</string>
     <string name="fb_login_protocol_scheme">fb232323563980343</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_fb_login">Login</string>
+    <string name="title_map">Map</string>
+    <string name="title_events_list">List</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_facebook">Facebook login!</string>
 </resources>
