@@ -21,7 +21,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FragmentLogin.OnLoginFragmentInteractionListener {
 
-    private TextView mTextMessage;
 
 
     List<Event> events;
@@ -37,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements FragmentLogin.OnL
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_fb_login);
 
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, new FragmentLogin());
@@ -45,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements FragmentLogin.OnL
 
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_map);
+
                     transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, new FragmentMap());
                     transaction.commit();
@@ -53,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements FragmentLogin.OnL
                     return true;
 
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_events_list);
                     transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, new FragmentEventsList());
                     transaction.commit();
@@ -74,27 +71,13 @@ public class MainActivity extends AppCompatActivity implements FragmentLogin.OnL
         transaction.replace(R.id.fragmentContainer, new FragmentLogin());
         transaction.commit();
 
-        mTextMessage = findViewById(R.id.message);
+//        mTextMessage = findViewById(R.id.message);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         printKeyHash();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        fragment.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onLoginFragmentInteraction() {
-
-    }
-
-    /**
-     * Facebook developer hash generator */
     private void printKeyHash() {
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
@@ -112,5 +95,17 @@ public class MainActivity extends AppCompatActivity implements FragmentLogin.OnL
             Log.wtf("Problem", "NoSuchAlgorithmException");
 
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        fragment.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onLoginFragmentInteraction() {
+
     }
 }
