@@ -1,13 +1,15 @@
 package com.asiaikuba.facebookevents;
 
 public class Event {
-    public final String description;
-    public final String start_time;
-    public final String end_time;
-    public final String id;
-    public final String name;
-    public final String rsvp_status;
-    public final Place place;
+    public String description;
+    public String start_time;
+    public String end_time;
+    public String id;
+    public String name;
+    public String rsvp_status;
+    public Place place = new Place();
+
+    Event() {}
 
     public Event(String description, String start_time, String end_time, String id, String name, String rsvp_status, Place place) {
         this.description = description;

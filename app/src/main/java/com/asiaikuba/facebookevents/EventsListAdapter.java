@@ -56,6 +56,9 @@ class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolde
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        // - get element from your dataset at this position
+        // - replace the contents of the view with that element
+
         holder.nameTextView.setText(mDataset.get(position).name);
 
     }
@@ -97,6 +100,7 @@ class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolde
                         FragmentEventInfo fragment = new FragmentEventInfo();
                         fragment.setEventIdOnList(position);
                         transaction.replace(R.id.fragmentContainer, fragment);
+                        transaction.addToBackStack(null);
                         transaction.commit();
 
                         break;

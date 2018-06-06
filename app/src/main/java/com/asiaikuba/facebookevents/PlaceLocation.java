@@ -1,12 +1,14 @@
 package com.asiaikuba.facebookevents;
 
 public class PlaceLocation {
-    public final String city;
-    public final String country;
-    public final String latitude;
-    public final String longitude;
-    public final String street;
-    public final String zip;
+    public String city = "";
+    public String country = "";
+    public String latitude = "";
+    public String longitude = "";
+    public String street = "";
+    public String zip = "";
+
+    PlaceLocation() {}
 
     private PlaceLocation(String city, String country, String latitude, String longitude, String street, String zip) {
         this.city = city;
