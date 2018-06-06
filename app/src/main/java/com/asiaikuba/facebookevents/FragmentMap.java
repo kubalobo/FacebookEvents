@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -30,6 +32,11 @@ public class FragmentMap extends Fragment implements
 
     private GoogleMap mMap;
     List<Event> events;
+    int markerToZoom = -1;
+
+    public void setMarkerToZoom(int markerToZoom) {
+        this.markerToZoom = markerToZoom;
+    }
 
 
     public FragmentMap() {
@@ -81,6 +88,9 @@ public class FragmentMap extends Fragment implements
         mMap.setOnInfoWindowClickListener(this);
 
         eventsMarkersGenerator();
+
+        if(markerToZoom != -1)
+            zoomToMarker();
     }
 
     void eventsMarkersGenerator() {
@@ -116,5 +126,18 @@ public class FragmentMap extends Fragment implements
         transaction.replace(R.id.fragmentContainer, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void zoomToMarker() {
+        Event event = events.get(this.markerToZoom);
+        LatLng coord = new LatLng(
+                Double.parseDouble(event.place.location.latitude),
+                Double.parseDouble(event.place.location.longitude));
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(coord)
+                .zoom(17).build();
+        //Zoom in and animate the camera.
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 }

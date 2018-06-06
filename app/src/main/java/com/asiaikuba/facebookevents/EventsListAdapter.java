@@ -95,25 +95,28 @@ class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolde
 
 
                 switch (view.getId()){
-                    case R.id.event_description:
+                    case R.id.event_description: {
                         FragmentTransaction transaction = fragmentManager.beginTransaction();
                         FragmentEventInfo fragment = new FragmentEventInfo();
                         fragment.setEventIdOnList(position);
                         transaction.replace(R.id.fragmentContainer, fragment);
                         transaction.addToBackStack(null);
                         transaction.commit();
-
                         break;
-                    case R.id.event_map:
-
+                    }
+                    case R.id.event_map: {
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        FragmentMap fragment = new FragmentMap();
+                        fragment.setMarkerToZoom(position);
+                        transaction.replace(R.id.fragmentContainer, fragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        fragmentManager.executePendingTransactions();
                         break;
-
+                    }
                 }
             }
         }
     }
 
 }
-
-
-
