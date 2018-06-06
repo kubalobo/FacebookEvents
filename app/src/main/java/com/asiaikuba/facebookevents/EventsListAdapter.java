@@ -76,20 +76,14 @@ class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolde
             this.nameTextView = (TextView) itemView.findViewById(R.id.event_name);
             // Store the context
             this.context = context;
-            int pos;
+
+            Button descriptionBtn = (Button) itemView.findViewById(R.id.event_description);
+            descriptionBtn.setOnClickListener(this); // calling onClick() method
+            Button mapBtn = (Button) itemView.findViewById(R.id.event_map);
+            mapBtn.setOnClickListener(this);
+
             itemView.setOnClickListener(this);
             }
-
-       @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            Button descriptionBtn = (Button) findViewById(R.id.event_description);
-            descriptionBtn.setOnClickListener(this); // calling onClick() method
-            Button mapBtn = (Button) findViewById(R.id.event_map);
-            mapBtn.setOnClickListener(this);
-        }
-
 
         @Override
         public void onClick(View view) {
