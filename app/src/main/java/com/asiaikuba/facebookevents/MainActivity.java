@@ -14,10 +14,13 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class MainActivity extends AppCompatActivity implements FragmentLogin.OnLoginFragmentInteractionListener {
 
@@ -32,6 +35,10 @@ public class MainActivity extends AppCompatActivity implements FragmentLogin.OnL
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            if (events == null) {
+                Toast.makeText(getApplicationContext(), "Najpierw kliknij przycisk!", Toast.LENGTH_SHORT).show();
+                return false;
+            }
             switch (item.getItemId()) {
                 case R.id.navigation_home:
 

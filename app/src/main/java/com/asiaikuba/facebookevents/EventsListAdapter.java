@@ -1,7 +1,6 @@
 package com.asiaikuba.facebookevents;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -12,9 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolder> {
     private List<Event> mDataset;
@@ -43,7 +42,7 @@ class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolde
     // Create new views (invoked by the layout manager)
     @Override
     public EventsListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+                                                           int viewType) {
         // create a new view
         View v = (View) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.events_list_item, parent, false);
@@ -71,10 +70,10 @@ class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolde
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView event_name;
-        private Context context;
         public TextView nameTextView;
+        private Context context;
 
-        public ViewHolder( View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             this.nameTextView = (TextView) itemView.findViewById(R.id.event_name);
             // Store the context
@@ -86,7 +85,7 @@ class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolde
             mapBtn.setOnClickListener(this);
 
             itemView.setOnClickListener(this);
-            }
+        }
 
         @Override
         public void onClick(View view) {
@@ -94,7 +93,7 @@ class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolde
             if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
 
 
-                switch (view.getId()){
+                switch (view.getId()) {
                     case R.id.event_description: {
                         FragmentTransaction transaction = fragmentManager.beginTransaction();
                         FragmentEventInfo fragment = new FragmentEventInfo();
@@ -105,6 +104,11 @@ class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolde
                         break;
                     }
                     case R.id.event_map: {
+
+                        if (mDataset.get(position).place.location.latitude.equals("")) {
+                            Toast.makeText(getApplicationContext(), "To wydarzenie nie ma konkretnej lokalizacji!", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
                         FragmentTransaction transaction = fragmentManager.beginTransaction();
                         FragmentMap fragment = new FragmentMap();
                         fragment.setMarkerToZoom(position);
