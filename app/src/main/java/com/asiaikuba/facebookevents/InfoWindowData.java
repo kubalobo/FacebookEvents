@@ -33,7 +33,8 @@ public class InfoWindowData implements GoogleMap.InfoWindowAdapter {
         View info_window_layout = ((Activity)context).getLayoutInflater().inflate(R.layout.info_window,null);
 //        TextView t = ( info_window_layout.findViewById(R.id.textView));
         TextView t =  info_window_layout.findViewById(R.id.textView);
-        t.setText(("LatLong :: " + marker.getPosition().latitude + "," + marker.getPosition().longitude));
+//        Event ev = (Event) marker.getTag();
+        t.setText(("LatLong :: " + marker.getPosition().latitude + "," + marker.getPosition().longitude)  );
 
         return info_window_layout;
 
