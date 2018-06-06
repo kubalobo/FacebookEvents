@@ -59,11 +59,7 @@ public class FragmentMap extends Fragment implements
         mMap = googleMap;
         events = ((MainActivity) getActivity()).events;
 
-        Marker warszawa = mMap.addMarker(new MarkerOptions()
-                .position(new LatLng(52.23, 20.92)));
-        warszawa.setTag(0);
-
-        InfoWindowData infoWindowAdapter = new InfoWindowData(getContext());
+        InfoWindowData infoWindowAdapter = new InfoWindowData(getContext(), getActivity());
 
 //        LatLng snowqualmie = new LatLng(52.23, 20.92);
 //        MarkerOptions markerOptions = new MarkerOptions();
@@ -88,17 +84,17 @@ public class FragmentMap extends Fragment implements
     }
 
     void eventsMarkersGenerator() {
+        int i = 0;
         for (Event event : events) {
             if(!event.place.location.latitude.equals("")) {
                 Marker marker = mMap.addMarker(new MarkerOptions()
                         .position(new LatLng(
                                 Double.parseDouble(event.place.location.latitude),
                                 Double.parseDouble(event.place.location.longitude))));
-                marker.setTag(event);
+                marker.setTag(i);
             }
-
+            i++;
         }
-
     }
 
 
@@ -112,13 +108,13 @@ public class FragmentMap extends Fragment implements
     public void onInfoWindowClick(Marker marker) {
         Toast.makeText(getContext(), "Info window clicked",
                 Toast.LENGTH_SHORT).show();
-        Event event = (Event) marker.getTag();
-        int position = events.indexOf(event);
+        int position = (int)marker.getTag();
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         FragmentEventInfo fragment = new FragmentEventInfo();
         fragment.setEventIdOnList(position);
         transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 }

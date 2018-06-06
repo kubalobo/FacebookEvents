@@ -100,6 +100,7 @@ class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolde
                 FragmentEventInfo fragment = new FragmentEventInfo();
                 fragment.setEventIdOnList(position);
                 transaction.replace(R.id.fragmentContainer, fragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         }

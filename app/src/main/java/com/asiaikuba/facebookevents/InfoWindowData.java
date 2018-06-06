@@ -16,9 +16,12 @@ import com.google.android.gms.maps.model.Marker;
 public class InfoWindowData implements GoogleMap.InfoWindowAdapter {
 
     private Context context;
+    private MainActivity activity;
 
-    public InfoWindowData(Context context) {
+    public InfoWindowData(Context context, Activity activity) {
         this.context = context;
+        this.activity = (MainActivity) activity;
+
     }
 
 
@@ -32,12 +35,11 @@ public class InfoWindowData implements GoogleMap.InfoWindowAdapter {
 
         View info_window_layout = ((Activity)context).getLayoutInflater().inflate(R.layout.info_window,null);
 //        TextView t = ( info_window_layout.findViewById(R.id.textView));
-        TextView t =  info_window_layout.findViewById(R.id.textView);
-//        Event ev = (Event) marker.getTag();
-        t.setText(("LatLong :: " + marker.getPosition().latitude + "," + marker.getPosition().longitude)  );
+        TextView t =  info_window_layout.findViewById(R.id.infoWindow_name);
+        int position = (int)marker.getTag();
+        Event ev = activity.events.get(position);
+        t.setText( ev.name );
 
         return info_window_layout;
-
     }
-
 }

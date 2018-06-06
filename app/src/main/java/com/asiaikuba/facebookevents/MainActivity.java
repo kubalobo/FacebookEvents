@@ -21,8 +21,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements FragmentLogin.OnLoginFragmentInteractionListener {
 
-
-
     List<Event> events;
 
     public List<Event> getEvents() {
@@ -39,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements FragmentLogin.OnL
 
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, new FragmentLogin());
+                    transaction.addToBackStack(null);
                     transaction.commit();
 
                     return true;
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements FragmentLogin.OnL
 
                     transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, new FragmentMap());
+                    transaction.addToBackStack(null);
                     transaction.commit();
 
                     return true;
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements FragmentLogin.OnL
                 case R.id.navigation_notifications:
                     transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, new FragmentEventsList());
+                    transaction.addToBackStack(null);
                     transaction.commit();
 
                     return true;
