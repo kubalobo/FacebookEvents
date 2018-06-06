@@ -45,7 +45,7 @@ public class FragmentEventsList extends Fragment {
 
         List<Event> events = ((MainActivity) Objects.requireNonNull(getActivity())).events;
 
-        adapter = new EventsListAdapter(events);
+        adapter = new EventsListAdapter(events, getActivity().getSupportFragmentManager());
         recyclerView.setAdapter(adapter);
 
         return view;
