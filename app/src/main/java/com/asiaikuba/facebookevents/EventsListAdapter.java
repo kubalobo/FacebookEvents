@@ -1,12 +1,14 @@
 package com.asiaikuba.facebookevents;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,9 +56,6 @@ class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolde
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-
         holder.nameTextView.setText(mDataset.get(position).name);
 
     }
@@ -67,45 +66,49 @@ class EventsListAdapter extends RecyclerView.Adapter<EventsListAdapter.ViewHolde
         return mDataset.size();
     }
 
-
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView event_name;
         private Context context;
         public TextView nameTextView;
-
 
         public ViewHolder( View itemView) {
             super(itemView);
             this.nameTextView = (TextView) itemView.findViewById(R.id.event_name);
             // Store the context
             this.context = context;
-            int pos;
-            // Attach a click listener to the entire row view
 
-//            nameTextView = (TextView) itemView.findViewById(R.id.event_name);
+            Button descriptionBtn = (Button) itemView.findViewById(R.id.event_description);
+            descriptionBtn.setOnClickListener(this); // calling onClick() method
+            Button mapBtn = (Button) itemView.findViewById(R.id.event_map);
+            mapBtn.setOnClickListener(this);
 
             itemView.setOnClickListener(this);
-        }
+            }
 
-        // Handles the row being being clicked
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition(); // gets item position
             if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
-//                User user = users.get(position);
-                // We can access the data within the views
-//                Toast.makeText(context, event_name.getText(), Toast.LENGTH_SHORT).show();
 
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                FragmentEventInfo fragment = new FragmentEventInfo();
-                fragment.setEventIdOnList(position);
-                transaction.replace(R.id.fragmentContainer, fragment);
-                transaction.commit();
+
+                switch (view.getId()){
+                    case R.id.event_description:
+                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        FragmentEventInfo fragment = new FragmentEventInfo();
+                        fragment.setEventIdOnList(position);
+                        transaction.replace(R.id.fragmentContainer, fragment);
+                        transaction.commit();
+
+                        break;
+                    case R.id.event_map:
+
+                        break;
+
+                }
             }
         }
     }
 
-    // ...
 }
 
 
