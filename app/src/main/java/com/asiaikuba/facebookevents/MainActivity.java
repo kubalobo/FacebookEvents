@@ -17,9 +17,9 @@ public class MainActivity extends AppCompatActivity implements FragmentLogin.OnL
     private TextView mTextMessage;
 
 
-    List<EventsAdapter> events;
+    List<Event> events;
 
-    public List<EventsAdapter> getEvents() {
+    public List<Event> getEvents() {
         return events;
     }
 

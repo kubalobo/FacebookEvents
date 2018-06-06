@@ -3,6 +3,7 @@ package com.asiaikuba.facebookevents;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.mikepenz.fastadapter.FastAdapter;
 import com.mikepenz.fastadapter.adapters.ItemAdapter;
 
 import java.util.List;
+import java.util.Objects;
 
 
 /**
@@ -19,6 +21,9 @@ import java.util.List;
  */
 public class FragmentEventsList extends Fragment {
 
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     public FragmentEventsList() {
         // Required empty public constructor
@@ -31,19 +36,17 @@ public class FragmentEventsList extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_events_list, container, false);
 
-        //create the ItemAdapter holding your Items
-        ItemAdapter itemAdapter = new ItemAdapter();
-        //create the managing FastAdapter, by passing in the itemAdapter
-        FastAdapter<EventsAdapter> fastAdapter = FastAdapter.with(itemAdapter);
-
         //set our adapters to the RecyclerView
-        RecyclerView recyclerView = view.findViewById(R.id.eventsRecyclerView);
-        recyclerView.setAdapter(fastAdapter);
+        recyclerView = view.findViewById(R.id.eventsRecyclerView);
+        recyclerView.setHasFixedSize(true);
 
-        //set the items to your ItemAdapter
-        MainActivity activity = (MainActivity) getActivity();
-        List<EventsAdapter> events = activity.events;
-        itemAdapter.add(events);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        List<Event> events = ((MainActivity) Objects.requireNonNull(getActivity())).events;
+
+        adapter = new EventsListAdapter(events);
+        recyclerView.setAdapter(adapter);
 
         return view;
     }
