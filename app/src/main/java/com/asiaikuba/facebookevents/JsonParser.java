@@ -19,7 +19,7 @@ public class JsonParser {
 
         try {
             List<Event> events = adapter.fromJson(json);
-            System.out.println(events.get(0).name);
+//            System.out.println(events.get(1).place.location.latitude);
             return events;
         } catch (IOException e) {
             e.printStackTrace();
