@@ -33,10 +33,16 @@ public class FragmentEventInfo extends Fragment {
 
         TextView name = view.findViewById(R.id.event_info_name);
         TextView description = view.findViewById(R.id.event_info_description);
+        TextView startTime = view.findViewById(R.id.event_info_start_time);
+        TextView endTime = view.findViewById(R.id.event_info_end_time);
+
 
         Event event = ((MainActivity) getActivity()).events.get(eventIdOnList);
         name.setText(event.name);
         description.setText(event.description);
+        startTime.setText(event.start_time);
+        endTime.setText(event.end_time);
+
 
         return view;
     }
