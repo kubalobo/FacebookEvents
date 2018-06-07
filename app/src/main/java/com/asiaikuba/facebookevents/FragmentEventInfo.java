@@ -3,9 +3,11 @@ package com.asiaikuba.facebookevents;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -35,9 +37,26 @@ public class FragmentEventInfo extends Fragment {
         TextView description = view.findViewById(R.id.event_info_description);
         TextView startTime = view.findViewById(R.id.event_info_start_time);
         TextView endTime = view.findViewById(R.id.event_info_end_time);
+        Button deleteButton = view.findViewById(R.id.deleteButton);
+        final MainActivity activity = ((MainActivity) getActivity());
+
+        final Event event = activity.events.get(eventIdOnList);
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.deletedEvents.add(event.id);
+                activity.events.remove(eventIdOnList);
 
 
-        Event event = ((MainActivity) getActivity()).events.get(eventIdOnList);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainer, new FragmentLogin());
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+
         name.setText(event.name);
         description.setText(event.description);
         startTime.setText(event.start_time);

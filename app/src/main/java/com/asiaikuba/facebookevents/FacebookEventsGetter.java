@@ -38,7 +38,7 @@ public class FacebookEventsGetter {
                         JSONObject object = response.getJSONObject();
                         try {
                             String data = object.getString("data");
-                            activity.events = JsonParser.parse(data);
+                            activity.events = JsonParser.parse(data, activity.deletedEvents);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
